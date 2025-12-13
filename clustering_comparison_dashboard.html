@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K-Means vs GMM Clustering Comparison</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px;
+               background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .container { max-width: 1300px; margin: 0 auto; background: white;
+                      padding: 40px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        h1 { color: #2c3e50; text-align: center; font-size: 2.8em; }
+        h2 { color: #34495e; border-bottom: 3px solid #3498db; padding-bottom: 10px; margin-top: 50px; }
+        .metric-box { display: inline-block; background: #ecf0f1; padding: 20px 40px; margin: 15px;
+                       border-radius: 12px; text-align: center; min-width: 200px; }
+        .value { font-size: 2.8em; font-weight: bold; color: #27ae60; }
+        img { width: 100%; border-radius: 10px; margin: 25px 0; box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 40px 0; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background: #3498db; color: white; padding: 12px; }
+        td { padding: 10px; border-bottom: 1px solid #ddd; }
+        .insight { background: #fff3cd; padding: 20px; border-left: 6px solid #ffc107; border-radius: 8px; margin: 30px 0; }
+        .conclusion { background: #d4edda; padding: 30px; border-radius: 12px; border: 3px solid #28a745; margin: 50px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 K-Means vs Gaussian Mixture Model</h1>
+        <p style="text-align:center; font-size:1.4em; color:#7f8c8d;">
+            Comprehensive Comparison of Two Clustering Approaches on Student Engagement Data
+        </p>
+
+        <div style="text-align:center;">
+            <div class="metric-box">
+                <h3>Students</h3>
+                <div class="value">29,741</div>
+            </div>
+            <div class="metric-box">
+                <h3>K-Means Silhouette</h3>
+                <div class="value">0.311</div>
+            </div>
+            <div class="metric-box">
+                <h3>GMM Silhouette</h3>
+                <div class="value">0.168</div>
+            </div>
+        </div>
+
+        <h2>Why 4 Clusters?</h2>
+        <img src="elbow_analysis.png" alt="Elbow Method">
+
+        <h2>PCA Visualization Comparison</h2>
+        <div class="comparison-grid">
+            <div>
+                <h3 style="text-align:center;">K-Means Clusters</h3>
+                <img src="pca_kmeans.png" alt="K-Means PCA">
+            </div>
+            <div>
+                <h3 style="text-align:center;">GMM Clusters</h3>
+                <img src="pca_gmm.png" alt="GMM PCA">
+            </div>
+        </div>
+
+        <div class="insight">
+            <strong>Observation:</strong> Both models separate students well in PCA space. 
+            K-Means tends to create more spherical clusters, while GMM can capture more elliptical/overlapping groups.
+        </div>
+
+        <h2>Cluster Behavior Profiles</h2>
+        <img src="heatmap_comparison.png" alt="Profile Heatmaps">
+
+        <h2>Academic Outcomes Comparison</h2>
+        <img src="outcomes_comparison.png" alt="Outcomes Comparison">
+
+        <h2>Outcome Success Rates by Cluster</h2>
+        <div class="comparison-grid">
+            <div>
+                <h3>K-Means</h3>
+                <table>
+                    <tr><th>Cluster</th><th>Success Rate<br>(Pass + Distinction)</th><th>Fail Rate</th><th>Withdrawn</th></tr>
+                    
+        <tr>
+            <td><strong>Cluster 0</strong></td>
+            <td>1.1%</td>
+            <td>38.7%</td>
+            <td>60.2%</td>
+        </tr>
+        <tr>
+            <td><strong>Cluster 1</strong></td>
+            <td>58.4%</td>
+            <td>24.1%</td>
+            <td>17.5%</td>
+        </tr>
+        <tr>
+            <td><strong>Cluster 2</strong></td>
+            <td>82.9%</td>
+            <td>7.4%</td>
+            <td>9.7%</td>
+        </tr>
+        <tr>
+            <td><strong>Cluster 3</strong></td>
+            <td>63.6%</td>
+            <td>18.2%</td>
+            <td>18.2%</td>
+        </tr>
+                </table>
+            </div>
+            <div>
+                <h3>GMM</h3>
+                <table>
+                    <tr><th>Cluster</th><th>Success Rate<br>(Pass + Distinction)</th><th>Fail Rate</th><th>Withdrawn</th></tr>
+                    
+        <tr>
+            <td><strong>Cluster 0</strong></td>
+            <td>0.4%</td>
+            <td>36.9%</td>
+            <td>62.7%</td>
+        </tr>
+        <tr>
+            <td><strong>Cluster 1</strong></td>
+            <td>81.6%</td>
+            <td>9.5%</td>
+            <td>8.9%</td>
+        </tr>
+        <tr>
+            <td><strong>Cluster 2</strong></td>
+            <td>54.6%</td>
+            <td>22.7%</td>
+            <td>22.7%</td>
+        </tr>
+        <tr>
+            <td><strong>Cluster 3</strong></td>
+            <td>23.9%</td>
+            <td>36.7%</td>
+            <td>39.4%</td>
+        </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="conclusion">
+            <h2>💡 Key Insights from Model Comparison</h2>
+            <ul style="font-size:1.2em; line-height:2;">
+                <li><strong>Silhouette Score:</strong> K-Means slightly edges out GMM in this dataset (0.311 vs 0.168)</li>
+                <li><strong>Flexibility:</strong> GMM can model more complex cluster shapes and provides probability of membership</li>
+                <li><strong>Predictive Power:</strong> Both identify high-risk and high-performing groups effectively</li>
+                <li><strong>Recommendation:</strong> Use K-Means for simplicity and interpretability; GMM when clusters may overlap or have different variances</li>
+            </ul>
+        </div>
+
+        <p style="text-align:center; color:#7f8c8d; margin-top:60px;">
+            Generated on December 14, 2025 • Python • scikit-learn • matplotlib • seaborn
+        </p>
+    </div>
+</body>
+</html>

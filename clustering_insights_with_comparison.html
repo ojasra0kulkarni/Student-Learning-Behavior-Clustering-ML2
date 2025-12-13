@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Clustering Insights + Model Comparison</title>
+    <style>
+        /* Your full beautiful CSS from before */
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 20px;
+               background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .container { max-width: 1200px; margin: 0 auto; background: white;
+                      padding: 40px; border-radius: 15px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        h1 { color: #2c3e50; text-align: center; font-size: 2.5em; margin-bottom: 10px; }
+        h2 { color: #34495e; border-bottom: 3px solid #3498db; padding-bottom: 10px; margin-top: 40px; }
+        .subtitle { text-align: center; color: #7f8c8d; font-size: 1.2em; margin-bottom: 40px; }
+        .metric-box { display: inline-block; background: #ecf0f1; padding: 20px 40px;
+                       margin: 10px; border-radius: 10px; text-align: center; }
+        .metric-box .value { font-size: 2.5em; font-weight: bold; color: #27ae60; }
+        img { width: 100%; border-radius: 10px; margin: 20px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .insight-box { background: #fff3cd; border-left: 5px solid #ffc107; padding: 20px;
+                        margin: 20px 0; border-radius: 5px; }
+        .cluster-card { background: #f8f9fa; padding: 20px; margin: 15px 0;
+                         border-radius: 10px; border-left: 5px solid #3498db; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th { background: #3498db; color: white; padding: 12px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #ddd; }
+        .conclusion { background: #d4edda; border: 2px solid #28a745; padding: 25px;
+                       border-radius: 10px; margin: 30px 0; }
+        .comparison-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 40px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Student Learning Behavior Clustering</h1>
+        <p class="subtitle">Unsupervised Discovery of 4 Distinct Learner Archetypes + Model Comparison</p>
+
+        <!-- All your original content here (metrics, elbow, PCA, archetypes, heatmap, outcomes) -->
+        <div style="text-align: center;">
+            <div class="metric-box"><h3>Students Analyzed</h3><div class="value">29,741</div></div>
+            <div class="metric-box"><h3>Clusters</h3><div class="value">4</div></div>
+            <div class="metric-box"><h3>K-Means Silhouette</h3><div class="value">0.311</div></div>
+            <div class="metric-box"><h3>GMM Silhouette</h3><div class="value">0.168</div></div>
+        </div>
+
+        <h2>🔍 Why 4 Clusters?</h2>
+        <img src="elbow_analysis.png">
+        <div class="insight-box"><strong>Key Finding:</strong> Elbow at K=4 with peak silhouette 0.311</div>
+
+        <h2>📊 Principal Components</h2>
+        <img src="pca_analysis.png">
+        <div class="insight-box"><strong>Key Finding:</strong> PC1 + PC2 explain 84.7% of variance</div>
+
+        <h2>🎯 The 4 Learner Archetypes (K-Means)</h2>
+        <img src="cluster_pca.png">
+
+        <!-- Your beautiful cluster cards -->
+        <div class="cluster-card" style="border-left-color: #e74c3c;">
+            <h3>🏆 High Achievers (6792 students)</h3>
+            <p>Consistent, high engagement across the course</p>
+        </div>
+        <div class="cluster-card" style="border-left-color: #3498db;">
+            <h3>😴 Passive Learners (10188 students)</h3>
+            <p>Minimal interaction throughout</p>
+        </div>
+        <div class="cluster-card" style="border-left-color: #2ecc71;">
+            <h3>⏰ Crammers (6439 students)</h3>
+            <p>Intense bursts near deadlines</p>
+        </div>
+        <div class="cluster-card" style="border-left-color: #f39c12;">
+            <h3>📈 Steady Progressors (6322 students)</h3>
+            <p>Regular, consistent pace</p>
+        </div>
+
+        <h2>🔥 Behavior Profile Heatmap</h2>
+        <img src="cluster_heatmap.png">
+
+        <h2>🎓 Learning Outcomes</h2>
+        <img src="outcomes_analysis.png">
+
+        <table>
+            <tr><th>Cluster</th><th>Pass Rate</th><th>Distinction Rate</th><th>Fail Rate</th><th>Withdrawn Rate</th></tr>
+            <tr><td><strong>High Achievers</strong></td><td>1.1%</td><td>0.1%</td><td>38.7%</td><td>60.2%</td></tr><tr><td><strong>Passive Learners</strong></td><td>49.0%</td><td>9.4%</td><td>24.1%</td><td>17.5%</td></tr><tr><td><strong>Crammers</strong></td><td>61.2%</td><td>21.6%</td><td>7.4%</td><td>9.7%</td></tr><tr><td><strong>Steady Progressors</strong></td><td>52.9%</td><td>10.7%</td><td>18.2%</td><td>18.2%</td></tr>
+        </table>
+
+        <!-- NEW: Model Comparison Section -->
+        <h2 style="margin-top: 60px; border-color: #9b59b6;">⚔️ K-Means vs Gaussian Mixture Model Comparison</h2>
+        <div class="comparison-grid">
+            <div><h3 style="text-align:center;">K-Means Clusters</h3><img src="cluster_pca.png"></div>
+            <div><h3 style="text-align:center;">GMM Clusters</h3><img src="pca_gmm.png"></div>
+        </div>
+
+        <div class="insight-box">
+            <strong>Model Comparison:</strong><br>
+            • K-Means Silhouette: 0.311 vs GMM: 0.168<br>
+            • K-Means assumes spherical clusters → cleaner separation<br>
+            • GMM allows elliptical/overlapping clusters → more flexible but sometimes less interpretable
+        </div>
+
+        <div class="conclusion">
+            <h2>💡 Final Conclusions</h2>
+            <ul style="font-size: 1.1em; line-height: 1.8;">
+                <li>Four clear learner archetypes emerged consistently across both models</li>
+                <li>Engagement and consistency strongly predict success</li>
+                <li>K-Means provides cleaner, more interpretable clusters for educational use</li>
+                <li>GMM offers flexibility if cluster shapes are complex</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

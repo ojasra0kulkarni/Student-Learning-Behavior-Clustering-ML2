@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Engagement Clustering Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f8f9fa; color: #333; }
+        h1, h2, h3 { color: #2c3e50; }
+        section { margin-bottom: 60px; padding: 25px; background-color: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #3498db; color: white; }
+        .metrics { display: flex; flex-wrap: wrap; gap: 30px; justify-content: center; }
+        .metric-card { background: #e8f4fc; padding: 25px; border-radius: 10px; min-width: 250px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .chart-container { max-width: 900px; margin: 30px auto; }
+        .scatter-container { height: 700px; max-width: 1000px; margin: 40px auto; position: relative; }
+        footer { text-align: center; margin-top: 100px; color: #777; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+
+    <h1 style="text-align:center;">Student Online Engagement Clustering Dashboard</h1>
+    <p style="text-align:center; font-size:1.2em; margin-bottom:50px;">
+        Unsupervised segmentation of student behavior in a Virtual Learning Environment using K-Means and Gaussian Mixture Models
+    </p>
+
+    <section id="evaluation">
+        <h2>Model Evaluation & Comparison</h2>
+        <div class="metrics">
+            <div class="metric-card">
+                <h3>K-Means (4 clusters)</h3>
+                <p><strong>Silhouette Score:</strong> <span style="font-size:2em; color:#27ae60;">{{kmeans_silhouette:.3f}}</span></p>
+            </div>
+            <div class="metric-card">
+                <h3>Gaussian Mixture Model (4 components)</h3>
+                <p><strong>Silhouette Score:</strong> <span style="font-size:1.8em; color:#2980b9;">{{gmm_silhouette:.3f}}</span></p>
+                <p><strong>Avg. Log-Likelihood:</strong> <span style="font-size:1.3em;">{{gmm_log_likelihood:.2f}}</span></p>
+            </div>
+        </div>
+        <p style="max-width:800px; margin:30px auto; line-height:1.6;">
+            Higher silhouette score indicates better-defined clusters. GMM also provides log-likelihood as a probabilistic fit measure.
+        </p>
+    </section>
+
+    <section id="kmeans-summary">
+        <h2>K-Means Cluster Profiles</h2>
+        <p>Average feature values per cluster (log-transformed total_clicks).</p>
+        {{kmeans_summary_html|safe}}
+        <div class="chart-container">
+            <canvas id="kmeansRadar"></canvas>
+        </div>
+    </section>
+
+    <section id="gmm-summary">
+        <h2>GMM Cluster Profiles</h2>
+        <p>Average feature values per cluster.</p>
+        {{gmm_summary_html|safe}}
+        <div class="chart-container">
+            <canvas id="gmmRadar"></canvas>
+        </div>
+    </section>
+
+    <section id="pca">
+        <h2>PCA Visualization of GMM Clusters</h2>
+        <p>2D projection of the standardized feature space.</p>
+        <div class="scatter-container">
+            <canvas id="pcaScatter"></canvas>
+        </div>
+    </section>
+
+    <section id="outcomes">
+        <h2>Association with Final Academic Outcomes (GMM)</h2>
+        <p>Distribution of final results across GMM clusters (post-hoc analysis).</p>
+        {{outcome_html|safe}}
+    </section>
+
+    <footer>
+        Generated using Python, pandas, scikit-learn, matplotlib, and Chart.js • December 2025
+    </footer>
+
+    <script>
+        const kmeansData = {{kmeans_radar_json|safe}};
+        const gmmData = {{gmm_radar_json|safe}};
+        const pcaData = {{pca_json|safe}};
+        const plotBase64 = "{{plot_base64}}";
+
+        const radarOptions = {
+            type: 'radar',
+            options: {
+                scales: { r: { beginAtZero: true, suggestedMax: 2 } },
+                plugins: { legend: { position: 'top' } }
+            }
+        };
+
+        new Chart(document.getElementById('kmeansRadar'), { ...radarOptions, data: kmeansData });
+        new Chart(document.getElementById('gmmRadar'), { ...radarOptions, data: gmmData });
+
+        // High-quality static background + interactive points
+        const ctx = document.getElementById('pcaScatter').getContext('2d');
+        if (plotBase64) {
+            const img = new Image();
+            img.onload = () => ctx.drawImage(img, 0, 0, ctx.canvas.width, ctx.canvas.height);
+            img.src = "data:image/png;base64," + plotBase64;
+        }
+
+        new Chart(ctx, {
+            type: 'scatter',
+            data: pcaData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { position: 'right' } },
+                scales: {
+                    x: { title: { display: true, text: 'PCA Component 1' } },
+                    y: { title: { display: true, text: 'PCA Component 2' } }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>

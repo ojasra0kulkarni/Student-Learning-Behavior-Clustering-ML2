@@ -38,8 +38,20 @@ Anonymized data from The Open University online courses.
 - `studentInfo.csv` → Student demographics and final results
 
 ### Download
-[https://analyse.kmi.open.ac.uk/open_dataset](https://www.kaggle.com/datasets/anlgrbz/student-demographics-online-education-dataoulad)
+- Official source: [analyse.kmi.open.ac.uk/open_dataset](https://analyse.kmi.open.ac.uk/open_dataset)
+- Mirror on Kaggle: [OULAD dataset](https://www.kaggle.com/datasets/anlgrbz/student-demographics-online-education-dataoulad)
 
 > Note: Files are not included in the repo due to size limits.
 
+## Running it
+
+```bash
+pip install pandas numpy scikit-learn matplotlib seaborn
+python 1_run_clustering_analysis.py   # runs feature engineering + K-Means/GMM clustering, saves results
+python 2_generate_dashboard.py        # builds the standalone HTML dashboard (clustering_insights_with_comparison.html)
+```
+
+Outputs include PCA/elbow/heatmap plots (`*.png`) and two HTML dashboards: `clustering_comparison_dashboard.html` (model comparison) and `clustering_insights_with_comparison.html` (full report).
+
+> `app.py`, `app2.py`, `app3.py`, `main.py`, `main_backup.py`, and `GMM.py` are earlier iterations/experiments kept for reference — `1_run_clustering_analysis.py` and `2_generate_dashboard.py` are the current pipeline.
 
